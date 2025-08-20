@@ -6,19 +6,7 @@
 /// @param ...  Variable arguments that match the format specifiers in fmt.
 /// @return  The number of characters printed to stdout.
 
-/* Step 1 — MVP: loop + handle %% only
- *
- * 1. Define ft_printf(const char *fmt, ...). chekc
- * 2. Setup va_list with va_start / va_end (even if unused yet). check 
- * 3. Loop through each char in fmt: 
- *      - If not '%': write it with write(1, &c, 1), count++.
- *      - If '%' followed by '%': write one '%', advance fmt by 2, count++.
- *      - If '%' followed by something else: leave it for later steps.
- * 4. Return total count of characters written.
- *
- * Test:
- *   ft_printf("a%%b") → prints "a%b", returns 3.
- */
+
 
 int ft_printf(const char *fmt, ...) // format string, ellipsis
 {

@@ -4,6 +4,22 @@
 # include <stdarg.h> // for variable argument lists (va_list, va_start, va_end)
 # include <unistd.h> // for write()
 
+typedef struct s_fmt {
+    int left;    // '-' flag (0/1) — ignore for now
+    int zero;    // '0' flag (0/1) — ignore for now
+    int plus;    // '+' flag (0/1) — ignore for now
+    int space;   // ' ' flag (0/1) — ignore for now
+    int hash;   // '#' flag (0/1) — ignore for now
+    int width;   // -1 if not set
+    int prec;    // -1 if not set
+    char spec;   // c s p d i u x X %
+} t_fmt;
+
+static void fmt_init(t_fmt *f) {
+    f->left=f->zero=f->plus=f->space=f->hash=0;
+    f->width = -1; f->prec = -1; f->spec = 0;
+}
+
 int ft_printf(const char *fmt, ...);
 int ft_putchar(int c);
 int ft_putstr(char *s);
