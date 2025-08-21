@@ -3,6 +3,7 @@
 
 # include <stdarg.h> // for variable argument lists (va_list, va_start, va_end)
 # include <unistd.h> // for write()
+#include "ft_libft.h" // for my libc
 
 typedef struct s_fmt {
     int left;    // '-' flag (0/1) — ignore for now
@@ -19,6 +20,12 @@ static void fmt_init(t_fmt *f) {
     f->left=f->zero=f->plus=f->space=f->hash=0;
     f->width = -1; f->prec = -1; f->spec = 0;
 }
+
+# if defined(__linux__)
+#  define NULL_PTR "(nil)"
+# elif defined(__APPLE__)
+#  define NULL_PTR "0x0"
+# endif
 
 int ft_printf(const char *fmt, ...);
 int ft_putchar(int c);
