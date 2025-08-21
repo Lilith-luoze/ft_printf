@@ -6,13 +6,15 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:09:13 by luozguo           #+#    #+#             */
-/*   Updated: 2025/08/18 15:09:14 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/08/21 23:07:51 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// count the length of int.
+/// @brief Calculates the length of the string representation of an integer.
+/// @param nbr 
+/// @return 
 static size_t	ft_itoa_len(int nbr)
 {
 	size_t	len;
@@ -30,7 +32,9 @@ static size_t	ft_itoa_len(int nbr)
 	return (len);
 }
 
-/*itoa return a string that can be freed*/
+/// @brief Converts an integer to a string representation.
+/// @param n 
+/// @return 
 char	*ft_itoa(int n)
 {
 	char	*str;
