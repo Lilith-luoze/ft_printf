@@ -1,9 +1,9 @@
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef LOCAL_PRINTF_H
+# define LOCAL_PRINTF_H
 
 # include <stdarg.h> // for variable argument lists (va_list, va_start, va_end)
 # include <unistd.h> // for write()
-#include "ft_libft.h" // for my libc (check)
+# include "ft_libft.h" // for my libc (check)
 
 typedef struct s_fmt {
     int left;    // '-' flag (0/1) — ignore for now
