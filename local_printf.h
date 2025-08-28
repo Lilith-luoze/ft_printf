@@ -27,12 +27,9 @@ static void fmt_init(t_fmt *f) {
 #  define NULL_PTR "0x0"
 # endif
 
-int ft_printf(const char *fmt, ...);
-int ft_putchar(int c);
-int ft_putstr(char *s);
-int ft_putnbr(int n);
-int ft_putunsigned(unsigned int n);
-int ft_puthex(unsigned int n, int uppercase);
-int ft_putptr(void *p);
+int	utoa_dec_rev(unsigned int u, char *buffer);
+int	put_buffer_rev(char *buffer, int len);
+int	put_d_basic(int d);
+
 
 #endif
