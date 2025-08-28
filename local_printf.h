@@ -22,14 +22,25 @@ static void fmt_init(t_fmt *f) {
 }
 
 # if defined(__linux__)
-#  define NULL_PTR "(nil)"
+# define NULL_PTR "(nil)"
 # elif defined(__APPLE__)
-#  define NULL_PTR "0x0"
+# define NULL_PTR "0x0"
 # endif
+
+int	put_c_basic(int c);
+
+int	put_s_basic(char *s);
 
 int	utoa_dec_rev(unsigned int u, char *buffer);
 int	put_buffer_rev(char *buffer, int len);
 int	put_d_basic(int d);
+int put_u_basic(unsigned int u);
+
+int utoa_hex_rev(unsigned long u, char *buffer, int upper);
+int put_p_basic(void *p);
+int put_hex_basic(unsigned int h, int upper);
+
+
 
 
 #endif

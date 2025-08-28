@@ -60,3 +60,12 @@ int	put_d_basic(int d)
 		return (put_buffer_rev(buffer, slen));
 	}
 }
+
+int put_u_basic(unsigned int u)
+{
+	int slen;        // string length in buffer
+	char buffer[10]; // max 10 digits for 32-bit int
+
+	slen = utoa_dec_rev(u, buffer);
+	return (put_buffer_rev(buffer, slen));
+}
