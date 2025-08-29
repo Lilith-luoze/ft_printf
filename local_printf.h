@@ -6,18 +6,20 @@
 # include "ft_libft.h" // for my libc (check)
 
 typedef struct s_fmt {
-    int left;    // '-' flag (0/1) — ignore for now
-    int zero;    // '0' flag (0/1) — ignore for now
-    int plus;    // '+' flag (0/1) — ignore for now
-    int space;   // ' ' flag (0/1) — ignore for now
-    int hash;   // '#' flag (0/1) — ignore for now
+    int minus;    // '-' flag (0/1)
+    int zero;    // '0' flag (0/1)
     int width;   // -1 if not set
     int prec;    // -1 if not set
     char spec;   // c s p d i u x X %
+
+
+    int space;   // ' ' flag (0/1) - ignore for now
+    int hash;   // '#' flag (0/1) — ignore for now
+    int plus;    // '+' flag (0/1)
 } t_fmt;
 
-static void fmt_init(t_fmt *f) {
-    f->left=f->zero=f->plus=f->space=f->hash=0;
+void fmt_init(t_fmt *f) {
+    f->minus=f->zero=f->plus=f->space=f->hash=0;
     f->width = -1; f->prec = -1; f->spec = 0;
 }
 
