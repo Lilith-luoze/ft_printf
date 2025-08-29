@@ -58,6 +58,17 @@ const char * parse_fmt_1(const char *fmt, t_fmt *f_p)
     return fmt;
 }
 
+const char * parse_fmt_2(const char *fmt, t_fmt *f_p)
+{
+    /* normalize */
+    if (f_p->minus) 
+        f_p->zero = 0;
+    if (f_p->plus)  
+        f_p->space = 0;
+    if (f_p->prec_present && (f_p->spec=='d'||f_p->spec=='i'||f_p->spec=='u'||f_p->spec=='x'||f_p->spec=='X'))
+        f_p->zero = 0;
+
+}
 
 int dispatch_parsed(va_list ap, t_fmt f)
 {

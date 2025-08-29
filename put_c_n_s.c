@@ -1,6 +1,6 @@
-#include "ft_printf.h"
+#include "local_printf.h"
 
-int	put_c_basic(int c)
+int	put_c(int c, t_fmt f)
 {
 	char	ch;
 
