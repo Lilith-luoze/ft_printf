@@ -28,10 +28,14 @@ int parse_number(const char **fmt)
     }
     return (result);
 }
-
+/*bonus rule 2: 
+plus is to add sign.
+    space is to prepend a space if no sign is added
+hash is to add prefix, or alternate form. */
+// parse fmt function - 4 steps
 const char * parse_fmt_1(const char *fmt, t_fmt *f_p)
 {
-    // 1. flags: - 0 # + space
+    // parse 1) flags: - 0 # + space,
     while (*fmt == '-' || *fmt == '0' || *fmt == '#' || *fmt == '+' || *fmt == ' ')
     {
         if (*fmt == '-') f_p->minus = 1;
@@ -41,31 +45,33 @@ const char * parse_fmt_1(const char *fmt, t_fmt *f_p)
         if (*fmt == ' ') f_p->space = 1;
         fmt++;
     }
-    // 2. parse width
+    // 2) width,
     if (*fmt >= '0' && *fmt <= '9')
         f_p -> width = parse_number(&fmt);
-    // 3. parse precision
+    // 3) precision,
     if (*fmt == '.')
     {
         fmt++;
         f_p -> prec = 0;
+        if (*fmt >= '0' && *fmt <= '9')
+            f_p -> prec = parse_number(&fmt);
     }
-    if (*fmt >= '0' && *fmt <= '9')
-        f_p -> prec = parse_number(&fmt);
-    // 4. parse specifer (loose control here; identifying it later)
+    // 4) specifer (loose control here; identifying it later) ?? what if a null ter.
     f_p -> spec = *fmt;
     fmt++;
     return fmt;
 }
 
-const char * parse_fmt_2(const char *fmt, t_fmt *f_p)
+// deal with flag conflicts
+/* override rules; normalize */
+const char * parse_fmt_2(t_fmt *f_p)
 {
-    /* normalize */
     if (f_p->minus) 
         f_p->zero = 0;
     if (f_p->plus)  
         f_p->space = 0;
-    if (f_p->prec_present && (f_p->spec=='d'||f_p->spec=='i'||f_p->spec=='u'||f_p->spec=='x'||f_p->spec=='X'))
+    if (f_p->prec != -1 && (f_p->spec=='d'||f_p->spec=='i'
+        ||f_p->spec=='u'||f_p->spec=='x'||f_p->spec=='X'))
         f_p->zero = 0;
 
 }

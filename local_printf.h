@@ -3,7 +3,7 @@
 
 # include <stdarg.h> // for variable argument lists (va_list, va_start, va_end)
 # include <unistd.h> // for write()
-# include "ft_libft.h" // for my libc (check)
+# include "libft/libft.h" // for my libc (check)
 
 typedef struct s_fmt {
     int minus;    // '-' flag (0/1)
