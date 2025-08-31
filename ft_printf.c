@@ -51,29 +51,31 @@ const char * parse_fmt_1(const char *fmt, t_fmt *f_p)
     // 3) precision,
     if (*fmt == '.')
     {
-        fmt++;
         f_p -> prec = 0;
-        if (*fmt >= '0' && *fmt <= '9')
+        if (fmt++, *fmt >= '0' && *fmt <= '9')
             f_p -> prec = parse_number(&fmt);
     }
-    // 4) specifer (loose control here; identifying it later) ?? what if a null ter.
-    f_p -> spec = *fmt;
-    fmt++;
-    return fmt;
+    // 4) specifer 
+    if (*fmt != '\0')
+    {
+        f_p -> spec = *fmt;
+        fmt++;
+    }
+    else
+        f_p -> spec = '%';
+    return (fmt);
 }
 
 // deal with flag conflicts
 /* override rules; normalize */
-const char * parse_fmt_2(t_fmt *f_p)
+void parse_fmt_2(t_fmt *f_p)
 {
     if (f_p->minus) 
         f_p->zero = 0;
     if (f_p->plus)  
         f_p->space = 0;
-    if (f_p->prec != -1 && (f_p->spec=='d'||f_p->spec=='i'
-        ||f_p->spec=='u'||f_p->spec=='x'||f_p->spec=='X'))
-        f_p->zero = 0;
-
+    if (f_p->prec != -1)
+        f_p->zero = 0; 
 }
 
 int dispatch_parsed(va_list ap, t_fmt f)
@@ -101,12 +103,8 @@ int dispatch_parsed(va_list ap, t_fmt f)
 
 int handle_format(const char **fmt_pp, va_list ap, t_fmt *f_p)
 {
-    if (**fmt_pp == '\0')
-        return (0);
     *fmt_pp = parse_fmt_1(*fmt_pp, f_p); // renewed the fmt pointer
-    *fmt_pp = parse_fmt_2(*fmt_pp, f_p); // renewed the fmt pointer
-    if (**fmt_pp == '\0')
-        return (0);
+    parse_fmt_2(f_p);
     return (dispatch_parsed(ap , *f_p));
 }
 
