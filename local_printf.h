@@ -27,19 +27,18 @@ typedef struct s_fmt {
 # define NULL_PTR "0x0"
 # endif
 
-int	put_c_basic(int c);
-
-int	put_s_basic(char *s);
-
 int	utoa_dec_rev(unsigned int u, char *buffer);
 int	put_buffer_rev(char *buffer, int len);
-int	put_d_basic(int d);
-int put_u_basic(unsigned int u);
 
 int utoa_hex_rev(unsigned long u, char *buffer, int upper);
-int put_p_basic(void *p);
-int put_hex_basic(unsigned int h, int upper);
 
+int put_c(int c, t_fmt f);
+int put_s(char *s, t_fmt f);
+int put_d(int d, t_fmt f);
+int put_u(unsigned int u, t_fmt f);
+int put_hex(unsigned int u, t_fmt f, int upper);
+int put_p(void *p, t_fmt f);
+int put_percent(t_fmt f);
 
 
 

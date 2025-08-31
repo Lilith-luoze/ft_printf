@@ -93,7 +93,7 @@ int dispatch_parsed(va_list ap, t_fmt f)
     else if(f.spec == 'u')
         return put_u(va_arg(ap, unsigned int), f);
     else if(f.spec == '%')
-        return write(1, "%", 1);
+        return put_percent(f);
     else // write % and the char at the spec pos as it is
     {
         write(1, "%", 1); // write the '%' character
