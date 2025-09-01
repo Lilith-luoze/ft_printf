@@ -20,6 +20,18 @@ typedef struct s_fmt {
     int plus;    // '+' flag (0/1)
 } t_fmt;
 
+typedef struct s_num
+{
+	unsigned long	un;         // absolute value of the number
+	int				negative;   // 1 if original number < 0
+	char			buf[32];    // digits in reverse
+	int				fil_len;    // digit length
+	int				prec0;     // extra leading zeros from precision
+	char			prefix;     // '+', '-', ' ', or unused
+	int				has_prefix; // 0 if no prefix, 1 if prefix is valid
+	int				padding;    // spaces/zeros for width
+}	t_numctx;
+
 
 # if defined(__linux__)
 # define NULL_PTR "(nil)"
