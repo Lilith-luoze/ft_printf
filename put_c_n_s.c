@@ -52,12 +52,6 @@ int	put_c(int c, t_fmt f)
 	return (count);
 }
 
-// put s with eff_len
-int put_s_trunc(const char *str , int eff_len)
-{
-	return write(1, str, eff_len);
-}
-
 /// @brief  Put string to stdout, return number of characters written
 int	put_s(char *s , t_fmt f)
 {
@@ -72,20 +66,20 @@ int	put_s(char *s , t_fmt f)
 
 	//prec
 	int eff_len;
-	if (f.prec >= 0 && f.prec <= (int)str_len)
+	if (f.prec >= 0 && f.prec < (int)str_len)
 		eff_len = f.prec;
 	else
-		eff_len = str_len;
+		eff_len =  (int)str_len;
 	//minus and width
 	if (f.minus)
 	{
-		count += put_s_trunc(str, eff_len);
+		count += write(1, str, eff_len);
 		count += put_repeat(' ', f.width - eff_len);
 	}
 	else
 	{
 		count += put_repeat(' ', f.width - eff_len);
-		count += put_s_trunc(str, eff_len);
+		count += write(1, str, eff_len);
 	}
 	return (count);
 }
