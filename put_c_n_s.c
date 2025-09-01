@@ -1,16 +1,15 @@
 #include "local_printf.h"
 
-// clever trick -- chunking method
+// avoid len<= 0. clever trick -- chunking method. 
 int put_repeat(char r , int len)
 {
 	int count;
 	char str[64];
+	if(len <= 0)
+		return(0);
 	count = 0;
 	while (count < 64)
-	{
-		str[count] = r;
-		count++;
-	}
+		str[count++] = r;
 	count = 0;
 	while(len)
 	{
@@ -53,16 +52,10 @@ int	put_c(int c, t_fmt f)
 	return (count);
 }
 
-// put s or s_trunc
-int put_s_trunc(const char *str , int trunc_len , int str_len)
+// put s with eff_len
+int put_s_trunc(const char *str , int eff_len)
 {
-	int count;
-	count = 0;
-	if (trunc_len < str_len)
-		count = write(1, str, trunc_len);
-	else
-		count = write(1, str, str_len);
-	return count;
+	return write(1, str, eff_len);
 }
 
 /// @brief  Put string to stdout, return number of characters written
@@ -75,19 +68,25 @@ int	put_s(char *s , t_fmt f)
 		return (write(1, &NULL_PTR,sizeof(NULL_PTR) - 1));
 	str = (const char *) s;
 	count = 0;
-	//prec; minus; width
 	str_len = ft_strlen(str);
+
+	//prec
+	int eff_len;
+	if (f.prec >= 0 && f.prec <= (int)str_len)
+		eff_len = f.prec;
+	else
+		eff_len = str_len;
+	//minus and width
 	if (f.minus)
 	{
-		count += put_s_trunc(str, f.prec, str_len);
-		count += put_repeat(' ', f.width);
+		count += put_s_trunc(str, eff_len);
+		count += put_repeat(' ', f.width - eff_len);
 	}
 	else
 	{
-		count += put_repeat(' ', f.width - 1);
-		count += write(1, &ch, 1);
+		count += put_repeat(' ', f.width - eff_len);
+		count += put_s_trunc(str, eff_len);
 	}
-	return (count);
 	return (count);
 }
 
