@@ -2,7 +2,7 @@
 #include "public_printf.h"
 
 
-void parser_init(t_fmt *f) 
+void parser_init(t_fmt_parser *f) 
 {
     f->minus=f->zero=f->plus=f->space=f->hash=0;
     f->width = -1; f->prec = -1; f->spec = 0;
@@ -33,7 +33,7 @@ plus is to add sign.
     space is to prepend a space if no sign is added
 hash is to add prefix, or alternate form. */
 // parse fmt function - 4 steps
-const char * parse_fmt_1(const char *fmt, t_fmt *f_p)
+const char * parse_fmt_1(const char *fmt, t_fmt_parser *f_p)
 {
     // parse 1) flags: - 0 # + space,
     while (*fmt == '-' || *fmt == '0' || *fmt == '#' || *fmt == '+' || *fmt == ' ')
@@ -68,7 +68,7 @@ const char * parse_fmt_1(const char *fmt, t_fmt *f_p)
 
 // deal with flag conflicts
 /* override rules; normalize */
-void parse_fmt_2(t_fmt *f_p)
+void parse_fmt_2(t_fmt_parser *f_p)
 {
     if (f_p->minus) 
         f_p->zero = 0;
@@ -78,7 +78,7 @@ void parse_fmt_2(t_fmt *f_p)
         f_p->zero = 0; 
 }
 
-int dispatch_parsed(va_list ap, t_fmt f)
+int dispatch_parsed(va_list ap, t_fmt_parser f)
 {
     if(f.spec == 'c')
         return put_c(va_arg(ap, int), f); // for var_functions, char promoted to int
@@ -101,7 +101,7 @@ int dispatch_parsed(va_list ap, t_fmt f)
     }    
 }
 
-int handle_format(const char **fmt_pp, va_list ap, t_fmt *f_p)
+int handle_format(const char **fmt_pp, va_list ap, t_fmt_parser *f_p)
 {
     *fmt_pp = parse_fmt_1(*fmt_pp, f_p); // renewed the fmt pointer
     parse_fmt_2(f_p);
@@ -112,7 +112,7 @@ int ft_printf(const char *fmt, ...)
 {
     int count;
     va_list ap;
-    t_fmt f;
+    t_fmt_parser f;
 
     va_start(ap,fmt);
     count = 0;

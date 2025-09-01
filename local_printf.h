@@ -15,10 +15,10 @@ typedef struct s_fmt {
     char spec;   // c s p d i u x X %
 
 
-    int space;   // ' ' flag (0/1) - ignore for now
-    int hash;   // '#' flag (0/1) — ignore for now
+    int space;   // ' ' flag (0/1)
+    int hash;   // '#' flag (0/1) 
     int plus;    // '+' flag (0/1)
-} t_fmt;
+} t_fmt_parser;
 
 typedef struct s_num
 {
@@ -27,10 +27,10 @@ typedef struct s_num
 	char			buf[32];    // digits in reverse
 	int				fil_len;    // digit length
 	int				prec0;     // extra leading zeros from precision
-	char			prefix;     // '+', '-', ' ', or unused
-	int				has_prefix; // 0 if no prefix, 1 if prefix is valid
+	char*			prefix;     //
+	int				prefix_len; 
 	int				padding;    // spaces/zeros for width
-}	t_numctx;
+}	t_numcfg;
 
 
 # if defined(__linux__)
@@ -44,13 +44,13 @@ int	put_buffer_rev(char *buffer, int len);
 
 int utoa_hex_rev(unsigned long u, char *buffer, int upper);
 
-int put_c(int c, t_fmt f);
-int put_s(char *s, t_fmt f);
-int put_d(int d, t_fmt f);
-int put_u(unsigned int u, t_fmt f);
-int put_hex(unsigned int u, t_fmt f, int upper);
-int put_p(void *p, t_fmt f);
-int put_percent(t_fmt f);
+int put_c(int c, t_fmt_parser f);
+int put_s(char *s, t_fmt_parser f);
+int put_d(int d, t_fmt_parser f);
+int put_u(unsigned int u, t_fmt_parser f);
+int put_hex(unsigned int u, t_fmt_parser f, int upper);
+int put_ptr(void *p, t_fmt_parser f);
+int put_percent(t_fmt_parser f);
 
 
 
