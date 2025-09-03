@@ -1,26 +1,21 @@
 NAME := libftprintf.a
-HDRS := ft_printf.h
+HDRS := local_printf.h
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 
 AR := ar
 ARFLAGS := rcs
-# TO BE MODIFIED: 
-SRCS := ft_printf.c \
-		ft_putchar.c \
-		ft_putstr.c \
-		ft_putnbr.c \
-		ft_puthex.c \
-		ft_putptr.c \
-		ft_putunsigned.c
 
+SRCS := ft_printf.c parser.c dispatcher.c utility1.c utility2.c \
+			put_c.c put_s.c put_d.c put_u.c put_hex.c put_p.c put_percent.c
 
 OBJS := $(SRCS:.c=.o)
 .DEFAULT_GOAL := all
-.PHONY: all re clean fclean # bonus
-# five mandaroty targets
-$(NAME): $(OBJS)
+
+.PHONY: all re clean fclean bonus
+
+$(NAME): $(OBJS) $(HDRS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 all: $(NAME)
@@ -35,3 +30,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+bonus: all
