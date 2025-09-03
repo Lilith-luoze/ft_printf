@@ -3,7 +3,6 @@
 
 # include <stdarg.h> // for variable argument lists (va_list, va_start, va_end)
 # include <unistd.h> // for write()
-# include "libft/libft.h" // for my libc (check)
 
 typedef struct s_fmt {
     int minus;    // '-' flag (0/1)
@@ -39,17 +38,36 @@ typedef struct s_num
 # define NULL_PTR "0x0"
 # endif
 
-int	utoa_dec_rev(unsigned int u, char *buffer);
-int	put_buffer_rev(char *buffer, int len);
+// utility1.c
+int put_repeat(char r, int len);
+int utoa_dec_rev(unsigned int u, char *buf);
+int put_buffer_rev(char *buf, int len);
+int decide_prefix(int negative, t_fmt_parser f, char **prefix_pp);
 
-int utoa_hex_rev(unsigned long u, char *buffer, int upper);
+// utility2.c
+int itoul(int n, unsigned long *un);
+int num_prec0(t_fmt_parser f, int *fil_len, unsigned long un);
+int put_num_cfg(t_numcfg n, t_fmt_parser f);
+int utoa_hex_rev(unsigned long u, char *buf, int upper);
+size_t ft_strlen(const char *s);
+
+//parser.c
+void parser_init(t_fmt_parser *f);
+int parse_number(const char **fmt);
+const char *parse_fmt_main(const char *fmt, t_fmt_parser *f_p);
+void parse_fmt_normalize(t_fmt_parser *f_p);
+
+// dispatcher.c
+int dispatch_parsed(va_list ap, t_fmt_parser f);
+
+// put %c s d u x X p %
 
 int put_c(int c, t_fmt_parser f);
 int put_s(char *s, t_fmt_parser f);
 int put_d(int d, t_fmt_parser f);
 int put_u(unsigned int u, t_fmt_parser f);
 int put_hex(unsigned int u, t_fmt_parser f, int upper);
-int put_ptr(void *p, t_fmt_parser f);
+int put_p(void *p, t_fmt_parser f);
 int put_percent(t_fmt_parser f);
 
 

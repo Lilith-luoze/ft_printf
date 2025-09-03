@@ -79,3 +79,14 @@ int utoa_hex_rev(unsigned long u, char *buf, int upper)
 
     return slen;
 }
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
