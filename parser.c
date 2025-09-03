@@ -55,13 +55,10 @@ const char * parse_fmt_main(const char *fmt, t_fmt_parser *f_p)
     }
     // 4) specifer 
     if (*fmt != '\0')
-    {
         f_p -> spec = *fmt;
-        fmt++;
-    }
     else
         f_p -> spec = '%';
-    return (fmt);
+    return (fmt++);
 }
 
 // deal with flag conflicts

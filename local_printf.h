@@ -38,6 +38,8 @@ typedef struct s_num
 # define NULL_PTR "0x0"
 # endif
 
+int		ft_printf(const char *fmt, ...);
+
 // utility1.c
 int put_repeat(char r, int len);
 int utoa_dec_rev(unsigned int u, char *buf);

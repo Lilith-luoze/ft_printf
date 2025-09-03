@@ -1,7 +1,7 @@
 #include "local_printf.h"
 
 
-int put_ptr(void *p, t_fmt_parser f)
+int put_p(void *p, t_fmt_parser f)
 {
     t_numcfg n;
     
