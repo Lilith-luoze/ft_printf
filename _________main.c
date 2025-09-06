@@ -1,46 +1,29 @@
-
-#include "local_printf.h"
-#include <stdio.h>   // system printf for reference
+#include "ft_printf.h"
+#include <stdio.h>
 
 int	main(void)
 {
 	printf("=== START TEST ===\n");
 
-	// Plain text
-	printf("[REF] plain text\n");
-	ft_printf("[FT ] plain text\n");
+	// Test NULL string only with ft_printf
+	ft_printf("[FT ] NULL str: %s\n\n", (char *)NULL);
 
+	// Precision smaller than length
+	printf("[REF] prec=3 str: %.3s\n", "abcdef");
+	ft_printf("[FT ] prec=3 str: %.3s\n\n", "abcdef");
 
-	// // %c
-	// printf("[REF] char: %c\n", 'A');
-	// ft_printf("[FT ] char: %c\n", 'A');
+	// Width smaller than length
+	printf("[REF] width=3 str: %3s\n", "abcdef");
+	ft_printf("[FT ] width=3 str: %3s\n\n", "abcdef");
 
-	// // %s
-	// printf("[REF] string: %s\n", "abc");
-	// ft_printf("[FT ] string: %s\n", "abc");
+	// Width larger than length
+	printf("[REF] width=10 str: %10s\n", "abc");
+	ft_printf("[FT ] width=10 str: %10s\n\n", "abc");
 
-	// // %d
-	// printf("[REF] decimal: %d\n", -42);
-	// ft_printf("[FT ] decimal: %d\n", -42);
+	// Left align
+	printf("[REF] minus flag: %-10s!\n", "abc");
+	ft_printf("[FT ] minus flag: %-10s!\n\n", "abc");
 
-	// // %u
-	// printf("[REF] unsigned: %u\n", 42u);
-	// ft_printf("[FT ] unsigned: %u\n", 42u);
-
-	// // %x / %X
-	// printf("[REF] hex lower: %x\n", 255);
-	// ft_printf("[FT ] hex lower: %x\n", 255);
-	// printf("[REF] hex upper: %X\n", 255);
-	// ft_printf("[FT ] hex upper: %X\n", 255);
-
-	// // %p
-	// printf("[REF] pointer: %p\n", (void *)0x1234);
-	// ft_printf("[FT ] pointer: %p\n", (void *)0x1234);
-
-	// // %%
-	// printf("[REF] percent: %%\n");
-	// ft_printf("[FT ] percent: %%\n");
-
-	// printf("=== END TEST ===\n");
+	printf("=== END TEST ===\n");
 	return (0);
 }

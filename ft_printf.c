@@ -1,4 +1,4 @@
-#include "local_printf.h"
+#include "ft_printf.h"
 
 int ft_printf(const char *fmt, ...)
 {
@@ -19,6 +19,7 @@ int ft_printf(const char *fmt, ...)
         fmt++;
         if (*fmt == '\0')
             break;
+        parser_init(&f);
         fmt = parse_fmt_main(fmt, &f); // parse fmt and move fmt pointer
         parse_fmt_normalize(&f);
         count += dispatch_parsed(ap, f);

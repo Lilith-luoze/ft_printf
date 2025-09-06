@@ -1,4 +1,4 @@
-#include "local_printf.h"
+#include "ft_printf.h"
 
 void parser_init(t_fmt_parser *f) 
 {
@@ -55,10 +55,13 @@ const char * parse_fmt_main(const char *fmt, t_fmt_parser *f_p)
     }
     // 4) specifer 
     if (*fmt != '\0')
-        f_p -> spec = *fmt;
+    {
+        f_p->spec = *fmt;
+        fmt++;  
+    }
     else
-        f_p -> spec = '%';
-    return (fmt++);
+        f_p->spec = '%';   // mark as literal percent}
+    return fmt;        // don't move beyond \0
 }
 
 // deal with flag conflicts

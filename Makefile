@@ -1,5 +1,5 @@
 NAME := libftprintf.a
-HDRS := local_printf.h
+HDRS := ft_printf.h
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror

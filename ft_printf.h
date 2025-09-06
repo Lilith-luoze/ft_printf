@@ -1,5 +1,5 @@
-#ifndef LOCAL_PRINTF_H
-# define LOCAL_PRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <stdarg.h> // for variable argument lists (va_list, va_start, va_end)
 # include <unistd.h> // for write()
