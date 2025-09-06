@@ -29,6 +29,9 @@ int num_prec0(t_fmt_parser f, int *fil_len , unsigned long un)
 	return (prec0);
 }
 
+/// @brief print number with configuration. print prefix, precision 0, buffer in reverse order, padding that decided by f.minus ,f.zero, precision./// @param n 
+/// @param f 
+/// @return number of characters printed
 int put_num_cfg(t_numcfg n, t_fmt_parser f)
 {
 	int count;
