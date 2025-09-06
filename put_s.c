@@ -4,13 +4,11 @@
 int	put_s(char *s , t_fmt_parser f)
 {
 	int	count;
-	const char *str;
 	size_t str_len;
-	if (!s)
-		return (write(1, &NULL_PTR,sizeof(NULL_PTR) - 1));
-	str = (const char *) s;
+	if (s == NULL)
+		s = "(null)";
 	count = 0;
-	str_len = ft_strlen(str);
+	str_len = ft_strlen((const char *)s);
 
 	//prec
 	int eff_len;
@@ -21,13 +19,13 @@ int	put_s(char *s , t_fmt_parser f)
 	//minus and width
 	if (f.minus)
 	{
-		count += write(1, str, eff_len);
+		count += write(1, s, eff_len);
 		count += put_repeat(' ', f.width - eff_len);
 	}
 	else
 	{
 		count += put_repeat(' ', f.width - eff_len);
-		count += write(1, str, eff_len);
+		count += write(1, s, eff_len);
 	}
 	return (count);
 }

@@ -1,31 +1,4 @@
 #include "ft_printf.h"
-
-void parser_init(t_fmt_parser *f) 
-{
-    f->minus=f->zero=f->plus=f->space=f->hash=0;
-    f->width = -1; f->prec = -1; f->spec = 0;
-}
-
-/* parse *fmt in a fixed order:
-Flags loop.
-
-Width loop.
-
-Precision loop.
-
-Specifier.*/
-
-// parse number and move the fmt pointer at the same time, it would points to place that not ever been treated.
-int parse_number(const char **fmt)
-{
-    int result = 0;
-    while(**fmt >= '0' && **fmt <= '9')
-    {
-        result = result * 10 + (**fmt - '0');
-        (*fmt)++;
-    }
-    return (result);
-}
 /*bonus rule 2: 
 plus is to add sign.
     space is to prepend a space if no sign is added
@@ -63,6 +36,34 @@ const char * parse_fmt_main(const char *fmt, t_fmt_parser *f_p)
         f_p->spec = '%';   // mark as literal percent}
     return fmt;        // don't move beyond \0
 }
+
+void parser_init(t_fmt_parser *f) 
+{
+    f->minus=f->zero=f->plus=f->space=f->hash=0;
+    f->width = -1; f->prec = -1; f->spec = 0;
+}
+
+/* parse *fmt in a fixed order:
+Flags loop.
+
+Width loop.
+
+Precision loop.
+
+Specifier.*/
+
+// parse number and move the fmt pointer at the same time, it would points to place that not ever been treated.
+int parse_number(const char **fmt)
+{
+    int result = 0;
+    while(**fmt >= '0' && **fmt <= '9')
+    {
+        result = result * 10 + (**fmt - '0');
+        (*fmt)++;
+    }
+    return (result);
+}
+
 
 // deal with flag conflicts
 /* override rules; normalize */
