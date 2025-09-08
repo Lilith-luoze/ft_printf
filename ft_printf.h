@@ -38,6 +38,7 @@ typedef struct s_num
 # define NULL_PTR "0x0"
 # endif
 
+int write_wrapper(int fd, const void *buf, size_t len , int *count);
 int		ft_printf(const char *fmt, ...);
 
 // utility1.c
@@ -56,7 +57,7 @@ size_t ft_strlen(const char *s);
 //parser.c
 void parser_init(t_fmt_parser *f);
 int parse_number(const char **fmt);
-const char *parse_fmt_main(const char *fmt, t_fmt_parser *f_p);
+const char *parse_fmt(const char *fmt, t_fmt_parser *f_p);
 void parse_fmt_normalize(t_fmt_parser *f_p);
 
 // dispatcher.c

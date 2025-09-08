@@ -4,7 +4,7 @@ plus is to add sign.
     space is to prepend a space if no sign is added
 hash is to add prefix, or alternate form. */
 // parse fmt function - 4 steps
-const char * parse_fmt_main(const char *fmt, t_fmt_parser *f_p)
+const char * parse_fmt(const char *fmt, t_fmt_parser *f_p)
 {
     // parse 1) flags: - 0 # + space,
     while (*fmt == '-' || *fmt == '0' || *fmt == '#' || *fmt == '+' || *fmt == ' ')
