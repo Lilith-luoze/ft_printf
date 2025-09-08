@@ -7,7 +7,7 @@ CFLAGS := -Wall -Wextra -Werror
 AR := ar
 ARFLAGS := rcs
 
-SRCS := ft_printf.c parser.c dispatcher.c utility1.c utility2.c \
+SRCS := ft_printf.c parser.c dispatcher.c put_helpers_1.c put_helpers_2.c \
 			put_c.c put_s.c put_d.c put_u.c put_hex.c put_p.c put_percent.c
 
 OBJS := $(SRCS:.c=.o)

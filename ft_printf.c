@@ -1,9 +1,11 @@
 #include "ft_printf.h"
 
 // call write, at success increment count, at failure return -1
-int write_wrapper(int fd, const void *buf, size_t len , int *count)
+int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count)
 {
-    int ret = write(fd, buf, len);
+    int ret;
+    
+    ret = write(fd, buf, len);
     if (ret == -1)
         return -1;
     *count += ret;
@@ -52,7 +54,7 @@ int ft_printf(const char *fmt, ...)
     {
         if( *fmt != '%')
         {
-            if (write_wrapper(1, fmt, 1, &count) == -1)
+            if (write_wrapper_in_printf(1, fmt, 1, &count) == -1)
                 count = -1;
             fmt++;
             continue;

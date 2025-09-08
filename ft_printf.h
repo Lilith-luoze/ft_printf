@@ -38,16 +38,16 @@ typedef struct s_num
 # define NULL_PTR "0x0"
 # endif
 
-int write_wrapper(int fd, const void *buf, size_t len , int *count);
+int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count);
 int		ft_printf(const char *fmt, ...);
 
-// utility1.c
+// put_helpers_1.c
 int put_repeat(char r, int len);
 int utoa_dec_rev(unsigned int u, char *buf);
 int put_buffer_rev(char *buf, int len);
 int decide_prefix(int negative, t_fmt_parser f, char **prefix_pp);
 
-// utility2.c
+// put_helpers_2.c
 int itoul(int n, unsigned long *un);
 int num_prec0(t_fmt_parser f, int *fil_len, unsigned long un);
 int put_num_cfg(t_numcfg n, t_fmt_parser f);
