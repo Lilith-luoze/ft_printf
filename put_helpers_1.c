@@ -1,12 +1,33 @@
 #include "ft_printf.h"
 
+/// @brief write. check err_flag before write, and set err_flag if error occurs
+/// @param fd 
+/// @param buf 
+/// @param len 
+/// @param err 
+/// @return printed length, or -1 on error and set *err_flag to 1.
+int write_wrapper(int fd, const void *buf, size_t len , int *err_flag)
+{
+	int ret;
+
+	if (*err_flag)
+		return -1;
+	ret = write(fd, buf, len);
+	if (ret == -1)
+	{
+		*err = 1;
+		return -1;
+	}
+	return ret;
+}
 
 // avoid len<= 0. clever trick -- chunking method. 
-int put_repeat(char r , int len)
+int put_repeat(char r , int len, int *err_flag)
 {
 	int count;
 	char str[64];
-	if(len <= 0)
+
+	if(len <= 0 || *err_flag)
 		return(0);
 	count = 0;
 	while (count < 64)
@@ -16,13 +37,12 @@ int put_repeat(char r , int len)
 	{
 		if (len <= 64)
 		{
-			count += write(1, str, len);
+			count += write_wrapper(1, str, len, err_flag);
 			return count;
 		}
 		else
 		{
-			write(1, str, 64);
-			count += 64;
+			count += write_wrapper(1, str, 64, err_flag);
 			len -= 64;
 		}
 	}
@@ -54,14 +74,16 @@ int	utoa_dec_rev(unsigned int u, char *buf)
 
 /// @brief  Put buffer in reverse order to stdout, return number of characters written 
 
-int put_buffer_rev(char *buf, int len)
+int put_buffer_rev(char *buf, int len, int *err_flag)
 {
 	int	count;
 
+	if (len <= 0 || *err_flag)
+		return (0);
 	count = 0;
 	while (len > 0)
 	{
-		write(1, buf + len - 1, 1);
+		write_wrapper(1, buf + len - 1, 1, err_flag);
 		len--;
 		count++;
 	}

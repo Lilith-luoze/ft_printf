@@ -42,10 +42,11 @@ int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count);
 int		ft_printf(const char *fmt, ...);
 
 // put_helpers_1.c
-int put_repeat(char r, int len);
+int put_repeat(char r, int len , int *err_flag);
 int utoa_dec_rev(unsigned int u, char *buf);
-int put_buffer_rev(char *buf, int len);
+int put_buffer_rev(char *buf, int len , int *err_flag);
 int decide_prefix(int negative, t_fmt_parser f, char **prefix_pp);
+int write_wrapper(int fd, const void *buf, size_t len , int *err_flag);
 
 // put_helpers_2.c
 int itoul(int n, unsigned long *un);
@@ -72,6 +73,7 @@ int put_u(unsigned int u, t_fmt_parser f);
 int put_hex(unsigned int u, t_fmt_parser f, int upper);
 int put_p(void *p, t_fmt_parser f);
 int put_percent(t_fmt_parser f);
+int put_num_cfg_left(t_numcfg n, int *err_flag);
 
 
 
