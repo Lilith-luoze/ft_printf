@@ -28,7 +28,7 @@ int advance_fmt_isnul(const char **fmt)
 /// @param fmt 
 /// @param f 
 /// @return number of printed characters, or -1 on error
-int handle_conversion(va_list ap, const char **fmt, t_fmt_parser *f)
+int handle_conversion(va_list *ap, const char **fmt, t_fmt_parser *f)
 {
     parser_init(f);
     *fmt = parse_fmt(*fmt, f); // parse fmt and move fmt pointer
@@ -36,7 +36,7 @@ int handle_conversion(va_list ap, const char **fmt, t_fmt_parser *f)
     return dispatch_parsed(ap, *f);
 }
 
-int iterator_in_printf(int * printed_in_spec, va_list ap, const char **fmt, t_fmt_parser *f)
+int iterator_in_printf(int * printed_in_spec, va_list *ap, const char **fmt, t_fmt_parser *f)
 {
     int count;
     count = 0;
@@ -74,7 +74,7 @@ va_end(ap) should use in the same func as va_start(). And always in pairs for sa
 
     
         va_start(ap,fmt);
-        count = iterator_in_printf(&printed_in_spec, ap, &fmt, &f);
+        count = iterator_in_printf(&printed_in_spec, &ap, &fmt, &f);
         va_end(ap);
         return count;
     }

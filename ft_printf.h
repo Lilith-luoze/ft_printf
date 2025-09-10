@@ -39,7 +39,7 @@ typedef struct s_num
 # endif
 
 int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count);
-int iterator_in_printf(int * printed_in_spec, va_list ap, const char **fmt, t_fmt_parser *f);
+int iterator_in_printf(int * printed_in_spec, va_list *ap, const char **fmt, t_fmt_parser *f);
 int		ft_printf(const char *fmt, ...);
 
 // put_helpers_1.c
@@ -63,7 +63,7 @@ const char *parse_fmt(const char *fmt, t_fmt_parser *f_p);
 void parse_fmt_normalize(t_fmt_parser *f_p);
 
 // dispatcher.c
-int dispatch_parsed(va_list ap, t_fmt_parser f);
+int dispatch_parsed(va_list *ap, t_fmt_parser f);
 
 // put %c s d u x X p %
 
