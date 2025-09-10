@@ -22,7 +22,7 @@ int dispatch_parsed(va_list ap, t_fmt_parser f)
     else // write % and the char at the spec pos as it is
     {
         write_wrapper(1, "%", 1, &err_flag);
-        write_wrapper(1, &f.spec, 1, &err_flag)
+        write_wrapper(1, &f.spec, 1, &err_flag);
         if (err_flag)
             return -1;
         return (2);

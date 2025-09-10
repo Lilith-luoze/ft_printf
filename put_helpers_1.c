@@ -15,7 +15,7 @@ int write_wrapper(int fd, const void *buf, size_t len , int *err_flag)
 	ret = write(fd, buf, len);
 	if (ret == -1)
 	{
-		*err = 1;
+		*err_flag = 1;
 		return -1;
 	}
 	return ret;
@@ -46,6 +46,8 @@ int put_repeat(char r , int len, int *err_flag)
 			len -= 64;
 		}
 	}
+	if (*err_flag)
+		return -1;
 	return count;
 }
 
