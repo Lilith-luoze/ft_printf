@@ -1,29 +1,28 @@
-// #include "ft_printf.h"
-// #include <stdio.h>
+#include <stdio.h>
+#include <unistd.h>
+#include "ft_printf.h"
 
-// int	main(void)
-// {
-// 	printf("=== START TEST ===\n");
+int main(void)
+{
+    int ret;
+    int saved_stdout;
 
-// 	// Test NULL string only with ft_printf
-// 	ft_printf("[FT ] NULL str: %s\n\n", (char *)NULL);
+    // Normal case
+    ret = ft_printf("hello");
+    printf("\nft_printf returned %d (expected 5)\n", ret);
 
-// 	// Precision smaller than length
-// 	printf("[REF] prec=3 str: %.3s\n", "abcdef");
-// 	ft_printf("[FT ] prec=3 str: %.3s\n\n", "abcdef");
+    // Save and close stdout
+    saved_stdout = dup(1);
+    close(1);
 
-// 	// Width smaller than length
-// 	printf("[REF] width=3 str: %3s\n", "abcdef");
-// 	ft_printf("[FT ] width=3 str: %3s\n\n", "abcdef");
+    // This should fail -> ft_printf returns -1
+    ret = ft_printf("%%c");
 
-// 	// Width larger than length
-// 	printf("[REF] width=10 str: %10s\n", "abc");
-// 	ft_printf("[FT ] width=10 str: %10s\n\n", "abc");
+    // Restore stdout *before* using printf again
+    dup2(saved_stdout, 1);
+    close(saved_stdout);
 
-// 	// Left align
-// 	printf("[REF] minus flag: %-10s!\n", "abc");
-// 	ft_printf("[FT ] minus flag: %-10s!\n\n", "abc");
+    printf("ft_printf with closed stdout returned %d (expected -1)\n", ret);
 
-// 	printf("=== END TEST ===\n");
-// 	return (0);
-// }
+    return 0;
+}

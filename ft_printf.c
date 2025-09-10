@@ -36,36 +36,45 @@ int handle_conversion(va_list ap, const char **fmt, t_fmt_parser *f)
     return dispatch_parsed(ap, *f);
 }
 
-/*to do:
+int iterator_in_printf(int * printed_in_spec, va_list ap, const char **fmt, t_fmt_parser *f)
+{
+    int count;
+    count = 0;
+    while(**fmt && count >= 0)
+    {
+        if( **fmt != '%')
+        {
+            if (write_wrapper_in_printf(1, *fmt, 1, &count) == -1)
+                count = -1;
+            (*fmt)++;
+            continue;
+        }
+        if (advance_fmt_isnul(fmt))
+            break;
+        *printed_in_spec = handle_conversion(ap, fmt, f);
+        if (*printed_in_spec == -1)
+            count = -1;
+        else
+            count += *printed_in_spec;
+    }
+    return count;
+}
+
+/*
 - write func to check for wrong return (check all the way to each branches)
 
 va_end(ap) should use in the same func as va_start(). And always in pairs for safety. 
 */
-int ft_printf(const char *fmt, ...)
-{
-    int count;
-    int printed_in_spec;
-    va_list ap;
-    t_fmt_parser f;
-
-    va_start(ap,fmt);
-    count = 0;
-    while(*fmt && count >= 0)
+    int ft_printf(const char *fmt, ...)
     {
-        if( *fmt != '%')
-        {
-            if (write_wrapper_in_printf(1, fmt, 1, &count) == -1)
-                count = -1;
-            fmt++;
-            continue;
-        }
-        if (advance_fmt_isnul(&fmt))
-            break;
-        printed_in_spec = handle_conversion(ap, &fmt, &f);
-        if (printed_in_spec == -1)
-            count = -1;
-        count += printed_in_spec;
+        int count;
+        int printed_in_spec;
+        va_list ap;
+        t_fmt_parser f;
+
+    
+        va_start(ap,fmt);
+        count = iterator_in_printf(&printed_in_spec, ap, &fmt, &f);
+        va_end(ap);
+        return count;
     }
-    va_end(ap);
-    return count;
-}

@@ -39,6 +39,7 @@ typedef struct s_num
 # endif
 
 int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count);
+int iterator_in_printf(int * printed_in_spec, va_list ap, const char **fmt, t_fmt_parser *f);
 int		ft_printf(const char *fmt, ...);
 
 // put_helpers_1.c
