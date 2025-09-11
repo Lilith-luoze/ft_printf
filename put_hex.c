@@ -10,7 +10,7 @@ int put_hex(unsigned int h, t_fmt_parser f, int upper)
 	n.un = (unsigned long)h;
 	if (n.un == 0)
 		f.hash = 0;
-	n.prefix_len = decide_prefix(n.negative, f, &n.prefix);
+	n.prefix_len = decide_prefix_for_dx(n.negative, f, &n.prefix);
 	n.fil_len = utoa_hex_rev(n.un, n.buf, upper);
 	n.prec0 = num_prec0(f, &n.fil_len, n.un);
 	n.padding = f.width - (n.prefix_len + n.prec0 + n.fil_len);

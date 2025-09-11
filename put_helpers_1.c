@@ -92,7 +92,7 @@ int put_repeat(char r , int len, int *err_flag)
 /// @param f 
 /// @param prefix_pp: pointer to pointer. modify the pointer to string
 /// @return the length of prefix
-int decide_prefix(int negative,t_fmt_parser f, char ** prefix_pp)
+int decide_prefix_for_dx(int negative,t_fmt_parser f, char ** prefix_pp)
 {
 	if (f.hash && (f.spec == 'x' || f.spec == 'X'))
 	{
