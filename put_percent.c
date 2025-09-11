@@ -6,7 +6,8 @@ int	put_percent(t_fmt_parser f)
 int	err_flag;
 
 	count = 0;
-err_flag = 0;
+	err_flag = 0;
+	
 	if (f.minus)
 	{
 		count += write_wrapper(1, "%", 1, &err_flag);

@@ -1,6 +1,5 @@
 #include "ft_printf.h"
 
-
 int put_u(unsigned int u, t_fmt_parser f)
 {
 	t_numcfg n;
