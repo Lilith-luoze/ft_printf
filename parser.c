@@ -1,9 +1,10 @@
 #include "ft_printf.h"
 /*bonus rule 2: 
 plus is to add sign.
-    space is to prepend a space if no sign is added
+space is to prepend a space if no sign is added
 hash is to add prefix, or alternate form. */
 // parse fmt function - 4 steps
+// this is strictly the sequence; if it can't reach the legitimate spec, it will go back and print as literal
 const char * parse_fmt(const char *fmt, t_fmt_parser *f_p)
 {
     // parse 1) flags: - 0 # + space,
@@ -43,15 +44,6 @@ void parser_init(t_fmt_parser *f)
     f->width = -1; f->prec = -1; f->spec = 0;
 }
 
-/* parse *fmt in a fixed order:
-Flags loop.
-
-Width loop.
-
-Precision loop.
-
-Specifier.*/
-
 // parse number and move the fmt pointer at the same time, it would points to place that not ever been treated.
 int parse_number(const char **fmt)
 {
@@ -75,4 +67,10 @@ void parse_fmt_normalize(t_fmt_parser *f_p)
         f_p->space = 0;
     if (f_p->prec != -1)
         f_p->zero = 0; 
+    if (f_p -> spec == '%')
+    {
+        f_p->plus = 0;
+        f_p->space = 0;
+        f_p->hash = 0;
+    }
 }
