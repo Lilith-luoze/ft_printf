@@ -21,6 +21,41 @@ int write_wrapper(int fd, const void *buf, size_t len , int *err_flag)
 	return ret;
 }
 
+
+/// @brief  Convert int to unsigned long, and set negative flag
+/// @param n 
+/// @param un being set to absolute value of n
+/// @return negative flag, 1 if n < 0
+int itoul(int n, unsigned long *un)
+{
+	if (n < 0)
+	{
+		*un = (unsigned long)(-(long)n);
+		return (1);
+	}
+	else
+	{
+		*un = (unsigned long)n;
+		return (0);
+	}
+}
+
+int num_prec0(t_fmt_parser f, int *fil_len , unsigned long un)
+{
+	int prec0;
+
+	if (f.prec > *fil_len)
+		prec0 = f.prec - *fil_len;
+	else if (f.prec == 0 && un == 0)
+	{
+		*fil_len = 0;
+		prec0 = 0;
+	}
+	else
+		prec0 = 0;
+	return (prec0);
+}
+
 // avoid len<= 0. clever trick -- chunking method. 
 int put_repeat(char r , int len, int *err_flag)
 {
@@ -52,46 +87,6 @@ int put_repeat(char r , int len, int *err_flag)
 }
 
 
-/// @brief Convert unsigned int to decimal string in reverse order
-/// @param
-/// @param buffer
-/// @return length of the string in buffer
-
-int	utoa_dec_rev(unsigned int u, char *buf)
-{
-	int	fil_len;
-
-	fil_len = 0;
-	while (u >= 10)
-	{
-		*buf = u % 10 + '0';
-		buf++;
-		fil_len++;
-		u /= 10;
-	}
-	*buf = u % 10 + '0';
-	fil_len++;
-	return (fil_len);
-}
-
-/// @brief  Put buffer in reverse order to stdout, return number of characters written 
-
-int put_buffer_rev(char *buf, int len, int *err_flag)
-{
-	int	count;
-
-	if (len <= 0 || *err_flag)
-		return (0);
-	count = 0;
-	while (len > 0)
-	{
-		write_wrapper(1, buf + len - 1, 1, err_flag);
-		len--;
-		count++;
-	}
-	return (count);
-}
-
 /// @brief decide the prefix for %duxXp
 /// @param negative 
 /// @param f 
@@ -119,4 +114,14 @@ int decide_prefix(int negative,t_fmt_parser f, char ** prefix_pp)
 		return (0);
 	}
 	return (1);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

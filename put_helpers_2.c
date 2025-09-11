@@ -1,32 +1,75 @@
 #include "ft_printf.h"
 
-int itoul(int n, unsigned long *un)
+/// @brief Convert unsigned long to hexadecimal string in reverse order to fill buf
+/// @param u 
+/// @param buf 
+/// @param upper 
+/// @return length of the string in buf
+int utoa_hex_rev(unsigned long u, char *buf, int upper)
 {
-	if (n < 0)
-	{
-		*un = (unsigned long)(-(long)n);
-		return (1);
-	}
-	else
-	{
-		*un = (unsigned long)n;
-		return (0);
-	}
-}
-int num_prec0(t_fmt_parser f, int *fil_len , unsigned long un)
-{
-	int prec0;
+    int slen;
+    char *hex;
+    if (upper)
+        hex = "0123456789ABCDEF";
+    else 
+        hex = "0123456789abcdef";
+    slen = 0;
+    while(u >= 16)
+    {
+        *buf = hex[u % 16]; // a more standard way to index into a lookup string
+        buf ++;
+        slen++;
+        u /= 16;
+    }
+    *buf = hex[u % 16];
+    slen++;
 
-	if (f.prec > *fil_len)
-		prec0 = f.prec - *fil_len;
-	else if (f.prec == 0 && un == 0)
+    return slen;
+}
+
+/// @brief Convert unsigned int to decimal string in reverse order
+/// @param
+/// @param buffer
+/// @return length of the string in buffer
+
+int	utoa_dec_rev(unsigned int u, char *buf)
+{
+	int	fil_len;
+
+	fil_len = 0;
+	while (u >= 10)
 	{
-		*fil_len = 0;
-		prec0 = 0;
+		*buf = u % 10 + '0';
+		buf++;
+		fil_len++;
+		u /= 10;
 	}
-	else
-		prec0 = 0;
-	return (prec0);
+	*buf = u % 10 + '0';
+	fil_len++;
+	return (fil_len);
+}
+
+/// @brief  Put filled buffer (in reverse order) to stdout
+/// @param buf
+/// @param len
+/// @param err_flag
+/// @return number of characters printed, or -1 on error and set *err_flag to -1
+int put_buffer_rev(char *buf, int len, int *err_flag)
+{
+	int	count;
+	
+	if (len <= 0 || *err_flag)
+		return (0);
+	count = 0;
+	while (len > 0)
+	{
+		write_wrapper(1, buf + len - 1, 1, err_flag);
+		len--;
+		count++;
+	}
+	if (*err_flag)
+		return (-1);
+	return (count);
 }
 
 int put_num_cfg_left(t_numcfg n, int *err_flag)
@@ -71,38 +114,5 @@ int put_num_cfg(t_numcfg n, t_fmt_parser f)
 	if (err_flag)
 		return (-1);
 	return (count);
-}
-
-
-int utoa_hex_rev(unsigned long u, char *buf, int upper)
-{
-    int slen;
-    char *hex;
-    if (upper)
-        hex = "0123456789ABCDEF";
-    else 
-        hex = "0123456789abcdef";
-    slen = 0;
-    while(u >= 16)
-    {
-        *buf = hex[u % 16]; // a more standard way to index into a lookup string
-        buf ++;
-        slen++;
-        u /= 16;
-    }
-    *buf = hex[u % 16];
-    slen++;
-
-    return slen;
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }
 
