@@ -2,4 +2,5 @@ a.out
 .DS_Store
 .vscode
 .editorconfig
-fmt_raw_printf
+fmt_raw_printf_outdated
+____main.c

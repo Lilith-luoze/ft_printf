@@ -31,7 +31,7 @@ typedef struct s_num
 	int				padding;    // spaces/zeros for width
 }	t_numcfg;
 
-
+// when spec p , arg is NULL, print (nil) in linux, 0x0 in mac
 # if defined(__linux__)
 # define NULL_PTR "(nil)"
 # elif defined(__APPLE__)
@@ -46,7 +46,7 @@ int		ft_printf(const char *fmt, ...);
 int put_repeat(char r, int len , int *err_flag);
 int utoa_dec_rev(unsigned int u, char *buf);
 int put_buffer_rev(char *buf, int len , int *err_flag);
-int decide_prefix(int negative, t_fmt_parser f, char **prefix_pp);
+int decide_prefix_for_dx(int negative, t_fmt_parser f, char **prefix_pp);
 int write_wrapper(int fd, const void *buf, size_t len , int *err_flag);
 
 // put_helpers_2.c
