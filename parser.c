@@ -1,4 +1,22 @@
 #include "ft_printf.h"
+
+/// @brief  find char c in string s
+/// @param s 
+/// @param c 
+/// @return  1 if found, 0 if not found
+int ft_strchr(const char *s, int c)
+{
+    while (*s)
+    {
+        if (*s == (char)c)
+            return 1;
+        s++;
+    }
+    if (c == '\0' && *s == '\0')
+        return 1;
+    return 0;
+}
+
 /*bonus rule 2: 
 plus is to add sign.
 space is to prepend a space if no sign is added
@@ -7,6 +25,11 @@ hash is to add prefix, or alternate form. */
 // this is strictly the sequence; if it can't reach the legitimate spec, it will go back and print as literal
 const char * parse_fmt(const char *fmt, t_fmt_parser *f_p)
 {
+    const char *start;
+    const char *lawful_specs;
+
+    lawful_specs = "cspdiuxX%";
+    start = fmt;
     // parse 1) flags: - 0 # + space,
     while (*fmt == '-' || *fmt == '0' || *fmt == '#' || *fmt == '+' || *fmt == ' ')
     {
@@ -28,13 +51,17 @@ const char * parse_fmt(const char *fmt, t_fmt_parser *f_p)
             f_p -> prec = parse_number(&fmt);
     }
     // 4) specifer 
-    if (*fmt != '\0')
+    if (*fmt == '\0')
+    {
+        f_p->spec = '%'; 
+    }
+    else if (ft_strchr(lawful_specs, *fmt))
     {
         f_p->spec = *fmt;
-        fmt++;  
+        fmt++;
     }
     else
-        f_p->spec = '%';   // mark as literal percent}
+        return start;
     return fmt;        // don't move beyond \0
 }
 
