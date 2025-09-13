@@ -1,15 +1,45 @@
 #include "ft_printf.h"
 
-// call write, at success increment count, at failure return -1
-int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count)
+
+int strlen_til_percent(const char *s)
 {
-    int ret;
-    
-    ret = write(fd, buf, len);
-    if (ret == -1)
-        return -1;
-    *count += ret;
-    return ret;
+    int len;
+
+    len = 0;
+    while (s[len] && s[len] != '%' && s[len] != '\0')
+        len++;
+    return len;
+}
+
+/// @brief first compute the number of non-percent literals and write them, and advance according fmt pointer for printf(); or if_ltr_percent is 1, go back one fmt and write ltr_fmt + 1 chars (extra literal % ), and advance 
+/// fmt pointers. Always change count, printed_chars or on write error, set count to -1.
+/// @param fmt 
+/// @param count 
+/// @param f 
+/// @return nothing
+void literal_write_handler(const char **fmt, int *count, t_fmt_parser *f)
+{
+    int fd;
+    int ltr_len;
+    int temp;
+
+    fd = 1;
+    ltr_len = strlen_til_percent(*fmt);
+    if (f -> if_ltr_percent)
+    {
+        temp = write(fd, (*fmt)-1 , ltr_len + 1);
+        f -> if_ltr_percent = 0;
+        (*fmt) += ltr_len;
+    }
+    else
+    {
+        temp = write(fd, *fmt, ltr_len);
+        (*fmt) += ltr_len;
+    }
+    if (temp == -1)
+        *count = -1;
+    else
+        *count += temp;
 }
 
 /// @brief advance fmt pointer by 1, if it reaches null, return 1
@@ -31,33 +61,32 @@ int advance_fmt_isnul(const char **fmt)
 int handle_conversion(va_list *ap, const char **fmt, t_fmt_parser *f)
 {
     parser_init(f);
-    *fmt = parse_fmt(*fmt, f); // parse fmt and move fmt pointer
+    *fmt = parse_fmt(*fmt, f ); // parse fmt and move fmt pointer
+    if (f->if_ltr_percent) // the case where should go back to print the literal
+        return 0; // indicate a literal % is needed to print and passed, let main handle it
     parse_fmt_normalize(f);
     return dispatch_parsed(ap, *f);
 }
 
-int iterator_in_printf(int * printed_in_spec, va_list *ap, const char **fmt, t_fmt_parser *f)
+void iterator_in_printf(va_list *ap, const char **fmt, t_fmt_parser *f, int *count)
 {
-    int count;
-    count = 0;
-    while(**fmt && count >= 0)
+    int printed_in_spec;
+
+    while(**fmt && (*count) >= 0)
     {
-        if( **fmt != '%')
+        if( (**fmt) != '%')
         {
-            if (write_wrapper_in_printf(1, *fmt, 1, &count) == -1)
-                count = -1;
-            (*fmt)++;
+            literal_write_handler(fmt, count, f);
             continue;
         }
         if (advance_fmt_isnul(fmt))
             break;
-        *printed_in_spec = handle_conversion(ap, fmt, f);
-        if (*printed_in_spec == -1)
-            count = -1;
+        printed_in_spec = handle_conversion(ap, fmt, f);
+        if (printed_in_spec == -1)
+            (*count) = -1;
         else
-            count += *printed_in_spec;
+            (*count) += printed_in_spec;
     }
-    return count;
 }
 
 /*
@@ -68,13 +97,14 @@ va_end(ap) should use in the same func as va_start(). And always in pairs for sa
     int ft_printf(const char *fmt, ...)
     {
         int count;
-        int printed_in_spec;
         va_list ap;
         t_fmt_parser f;
 
     
         va_start(ap,fmt);
-        count = iterator_in_printf(&printed_in_spec, &ap, &fmt, &f);
+        count = 0;
+        parser_init(&f);
+        iterator_in_printf(&ap, &fmt, &f, &count);
         va_end(ap);
         return count;
     }

@@ -23,7 +23,7 @@ space is to prepend a space if no sign is added
 hash is to add prefix, or alternate form. */
 // parse fmt function - 4 steps
 // this is strictly the sequence; if it can't reach the legitimate spec, it will go back and print as literal
-const char * parse_fmt(const char *fmt, t_fmt_parser *f_p)
+const char * parse_fmt(const char *fmt, t_fmt_parser *f_p )
 {
     const char *start;
     const char *lawful_specs;
@@ -60,15 +60,26 @@ const char * parse_fmt(const char *fmt, t_fmt_parser *f_p)
         f_p->spec = *fmt;
         fmt++;
     }
-    else
+    else // the case where should go back to print the literal, i want to keep the case 
+    {
+        f_p -> if_ltr_percent = 1; // indicate a literal % is needed to print and passed
         return start;
+    }
+        
     return fmt;        // don't move beyond \0
 }
 
 void parser_init(t_fmt_parser *f) 
 {
-    f->minus=f->zero=f->plus=f->space=f->hash=0;
-    f->width = -1; f->prec = -1; f->spec = 0;
+    f->minus= 0;
+    f->zero= 0;
+    f->plus=0;
+    f->space=0;
+    f->hash=0;
+    f->width = -1; 
+    f->prec = -1; 
+    f->spec = 0;
+    f -> if_ltr_percent = 0;
 }
 
 // parse number and move the fmt pointer at the same time, it would points to place that not ever been treated.

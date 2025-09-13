@@ -43,7 +43,7 @@ int itoul(int n, unsigned long *un)
 int num_prec0(t_fmt_parser f, int *fil_len , unsigned long un)
 {
 	int prec0;
-
+	
 	if (f.prec > *fil_len)
 		prec0 = f.prec - *fil_len;
 	else if (f.prec == 0 && un == 0)

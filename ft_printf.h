@@ -17,6 +17,7 @@ typedef struct s_fmt {
     int space;   // ' ' flag (0/1)
     int hash;   // '#' flag (0/1) 
     int plus;    // '+' flag (0/1)
+    int if_ltr_percent; // 1 if a literal % is needed to print and passed
 } t_fmt_parser;
 
 typedef struct s_num
@@ -38,8 +39,8 @@ typedef struct s_num
 # define NULL_PTR "0x0"
 # endif
 
-int write_wrapper_in_printf(int fd, const void *buf, size_t len , int *count);
-int iterator_in_printf(int * printed_in_spec, va_list *ap, const char **fmt, t_fmt_parser *f);
+
+void iterator_in_printf(va_list *ap, const char **fmt, t_fmt_parser *f, int *count);
 int		ft_printf(const char *fmt, ...);
 
 // put_helpers_1.c

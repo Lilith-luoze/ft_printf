@@ -63,9 +63,8 @@ int put_buffer_rev(char *buf, int len, int *err_flag)
 	count = 0;
 	while (len > 0)
 	{
-		write_wrapper(1, buf + len - 1, 1, err_flag);
+		count += write_wrapper(1, buf + len - 1, 1, err_flag);
 		len--;
-		count++;
 	}
 	if (*err_flag)
 		return (-1);
