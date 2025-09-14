@@ -6,13 +6,13 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 16:43:45 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 16:43:46 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 17:07:54 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void decide_prefix_for_p(t_fmt_parser f, char **prefix, int *prefix_len)
+void	decide_prefix_for_p(t_fmt_parser f, char **prefix, int *prefix_len)
 {
 	if (f.space)
 	{
@@ -31,12 +31,11 @@ void decide_prefix_for_p(t_fmt_parser f, char **prefix, int *prefix_len)
 	}
 }
 
-
-int put_p(void *p, t_fmt_parser f)
+int	put_p(void *p, t_fmt_parser f)
 {
-    t_numcfg n;
+	t_numcfg	n;
 
-    if (p == NULL)
+	if (p == NULL)
 		return (put_s(NULL_PTR, f));
 	n.negative = 0;
 	decide_prefix_for_p(f, &n.prefix, &n.prefix_len);
@@ -46,6 +45,5 @@ int put_p(void *p, t_fmt_parser f)
 	n.padding = f.width - (n.prefix_len + n.prec0 + n.fil_len);
 	if (n.padding < 0)
 		n.padding = 0;
-
 	return (put_num_cfg(n, f));
 }

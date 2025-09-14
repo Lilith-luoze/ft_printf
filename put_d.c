@@ -6,18 +6,18 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 16:43:35 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 16:43:36 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 17:07:19 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 /// @brief Put decimal number to stdout, return number of characters written
 // handles sign, precision (leading zeros), width, and flags (+, space, 0, -).
 // prec never truncates digits
 int	put_d(int d, t_fmt_parser f)
 {
-	t_numcfg n;
+	t_numcfg	n;
 
 	n.negative = itoul(d, &n.un);
 	n.fil_len = utoa_dec_rev(n.un, n.buf);
@@ -26,8 +26,5 @@ int	put_d(int d, t_fmt_parser f)
 	n.padding = f.width - (n.prefix_len + n.prec0 + n.fil_len);
 	if (n.padding < 0)
 		n.padding = 0;
-
 	return (put_num_cfg(n, f));
 }
-
-

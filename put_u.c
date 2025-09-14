@@ -6,15 +6,15 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 16:43:52 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 16:43:53 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 17:08:20 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int put_u(unsigned int u, t_fmt_parser f)
+int	put_u(unsigned int u, t_fmt_parser f)
 {
-	t_numcfg n;
+	t_numcfg	n;
 
 	n.negative = 0;
 	n.prefix_len = 0;
@@ -24,6 +24,5 @@ int put_u(unsigned int u, t_fmt_parser f)
 	n.padding = f.width - (n.prefix_len + n.prec0 + n.fil_len);
 	if (n.padding < 0)
 		n.padding = 0;
-
 	return (put_num_cfg(n, f));
 }

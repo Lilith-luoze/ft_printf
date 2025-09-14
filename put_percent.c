@@ -6,7 +6,7 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 16:43:47 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 16:43:48 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 17:08:00 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 int	put_percent(t_fmt_parser f)
 {
 	int	count;
-int	err_flag;
+	int	err_flag;
 
 	count = 0;
 	err_flag = 0;
-	
 	if (f.minus)
 	{
 		count += write_wrapper(1, "%", 1, &err_flag);
@@ -33,7 +32,7 @@ int	err_flag;
 			count += put_repeat(' ', f.width - 1, &err_flag);
 		count += write_wrapper(1, "%", 1, &err_flag);
 	}
-if (err_flag)
-		return -1;
+	if (err_flag)
+		return (-1);
 	return (count);
 }
