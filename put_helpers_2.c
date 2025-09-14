@@ -6,37 +6,38 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 16:43:40 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 16:43:41 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 19:12:06 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/// @brief Convert unsigned long to hexadecimal string in reverse order to fill buf
-/// @param u 
-/// @param buf 
-/// @param upper 
+/// @brief Convert unsigned long to hexadecimal string
+/// in reverse order to fill buf
+/// @param u
+/// @param buf
+/// @param upper
 /// @return length of the string in buf
-int utoa_hex_rev(unsigned long u, char *buf, int upper)
+int	utoa_hex_rev(unsigned long u, char *buf, int upper)
 {
-    int slen;
-    char *hex;
-    if (upper)
-        hex = "0123456789ABCDEF";
-    else 
-        hex = "0123456789abcdef";
-    slen = 0;
-    while(u >= 16)
-    {
-        *buf = hex[u % 16]; // a more standard way to index into a lookup string
-        buf ++;
-        slen++;
-        u /= 16;
-    }
-    *buf = hex[u % 16];
-    slen++;
+	int		slen;
+	char	*hex;
 
-    return slen;
+	if (upper)
+		hex = "0123456789ABCDEF";
+	else
+		hex = "0123456789abcdef";
+	slen = 0;
+	while (u >= 16)
+	{
+		*buf = hex[u % 16];
+		buf++;
+		slen++;
+		u /= 16;
+	}
+	*buf = hex[u % 16];
+	slen++;
+	return (slen);
 }
 
 /// @brief Convert unsigned int to decimal string in reverse order
@@ -66,10 +67,10 @@ int	utoa_dec_rev(unsigned int u, char *buf)
 /// @param len
 /// @param err_flag
 /// @return number of characters printed, or -1 on error and set *err_flag to -1
-int put_buffer_rev(char *buf, int len, int *err_flag)
+int	put_buffer_rev(char *buf, int len, int *err_flag)
 {
 	int	count;
-	
+
 	if (len <= 0 || *err_flag)
 		return (0);
 	count = 0;
@@ -83,9 +84,10 @@ int put_buffer_rev(char *buf, int len, int *err_flag)
 	return (count);
 }
 
-int put_num_cfg_left(t_numcfg n, int *err_flag)
+int	put_num_cfg_left(t_numcfg n, int *err_flag)
 {
-	int count;
+	int	count;
+
 	if (*err_flag)
 		return (0);
 	count = 0;
@@ -96,14 +98,18 @@ int put_num_cfg_left(t_numcfg n, int *err_flag)
 	return (count);
 }
 
-/// @brief this is the only print function for all number specifiers(udxX).print number with configuration. print prefix, precision 0, buffer in reverse order, padding that decided by f.minus ,f.zero, precision./// @param n 
-/// @param f 
+/// @brief this is the only print function for all number specifiers(udxX).
+/// print number with configuration. print prefix,
+///	precision 0, buffer in reverse order,
+///	padding that decided by f.minus ,f.zero, precision.
+/// @param n
+/// @param f
 /// @return number of characters printed
-int put_num_cfg(t_numcfg n, t_fmt_parser f)
+int	put_num_cfg(t_numcfg n, t_fmt_parser f)
 {
-	int count;
-	int err_flag;
-	
+	int	count;
+	int	err_flag;
+
 	err_flag = 0;
 	count = 0;
 	if (f.minus)
@@ -126,4 +132,3 @@ int put_num_cfg(t_numcfg n, t_fmt_parser f)
 		return (-1);
 	return (count);
 }
-
