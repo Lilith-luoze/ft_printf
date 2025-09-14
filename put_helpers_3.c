@@ -6,7 +6,7 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 19:12:33 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 19:32:27 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 20:03:50 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	write_with_copying_adding_0(int fd, int ori_len, const char *s)
 	while (i_s < ori_len)
 	{
 		str_with_0[i_str_with_0++] = s[i_s];
-		if (s[i_s] == '.' && first_dot)
+		if (s[i_s] == '.' && first_dot && s[i_s + 1] != '0')
 		{
 			str_with_0[i_str_with_0++] = '0';
 			first_dot = 0;
