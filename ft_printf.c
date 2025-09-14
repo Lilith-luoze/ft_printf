@@ -6,7 +6,7 @@
 /*   By: luozguo <luozguo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 19:35:02 by luozguo           #+#    #+#             */
-/*   Updated: 2025/09/14 19:35:03 by luozguo          ###   ########.fr       */
+/*   Updated: 2025/09/14 19:58:23 by luozguo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ void	iterator_in_printf(va_list *ap, const char **fmt, t_fmt_parser *f,
 }
 
 /*
-- write func to check for wrong return (check all the way to each branches)
-
-va_end(ap) should use in the same func as va_start(). And always in pairs for safety.
+- write func to check for wrong return 
+(check all the way to each branches)
+va_end(ap) should use in the same func as va_start().
+ And always in pairs for safety.
 */
 int	ft_printf(const char *fmt, ...)
 {
